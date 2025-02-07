@@ -1,0 +1,55 @@
+.add-task-wrapper {
+    margin-top: 1rem; /* пример */
+}
+
+.add-task-button {
+    background-color: #3b82f6; /* ~ bg-blue-500 */
+    color: #ffffff;           /* ~ text-white */
+    padding: 0.5rem 1rem;     /* ~ px-4 py-2 */
+    border-radius: 0.25rem;   /* ~ rounded */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-task-button:hover {
+    background-color: #2563eb; /* ~ hover:bg-blue-600 */
+}
+
+.add-task-form {
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #e5e7eb; /* ~ border */
+    border-radius: 0.25rem;     /* ~ rounded */
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+}
+
+.submit-button {
+    background-color: #10b981; /* ~ bg-green-500 */
+    color: #ffffff;            /* ~ text-white */
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+    background-color: #059669; /* ~ hover:bg-green-600 */
+}

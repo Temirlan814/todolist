@@ -1,0 +1,31 @@
+.task-list {
+    margin-top: 1rem; /* ~ mt-4 */
+}
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Добавляем горизонтальный скролл при необходимости */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Убираем промежутки между ячейками */
+}
+
+th, td {
+    padding: 8px;
+    border: 1px solid #e5e7eb;
+    text-align: left;
+    white-space: nowrap; /* Запрещаем перенос строк */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Обрезаем текст с '...' */
+    max-width: 200px; /* Ограничиваем ширину колонок */
+}
+
+th {
+    background-color: #f9f9f9;
+}
+
+td {
+    word-break: break-word; /* Позволяем переносу ОЧЕНЬ длинных слов */
+    white-space: normal; /* Разрешаем перенос строк */
+}

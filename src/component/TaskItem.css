@@ -1,0 +1,165 @@
+/* Задача в списке */
+.task-item {
+    width: 100%; /* Занимает всю доступную ширину */
+    max-width: 600px; /* Ограничиваем максимальную ширину */
+    padding: 1.5rem; /* Увеличиваем отступы внутри */
+    border: 1px solid #e5e7eb; /* Серая рамка */
+    border-radius: 0.5rem; /* Скругляем углы */
+    background-color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+.task-item-title {
+    font-size: 1.5rem; /* Сделаем заголовок крупнее */
+    font-weight: bold;
+    max-width: 100%; /* Пусть занимает всю ширину контейнера */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Если текст длинный – добавляем '...' */
+    white-space: nowrap; /* Запрещаем перенос строк (если хочется обрезать) */
+}
+.task-item:hover {
+    transform: scale(1.02); /* Добавляем легкий эффект увеличения при наведении */
+}
+
+
+.task-item.completed {
+    background-color: #d1fae5; /* ~ bg-green-100 */
+}
+
+.task-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-item-title {
+    font-size: 1.25rem; /* ~ text-xl */
+    margin: 0;
+}
+
+.task-item-title.completed {
+    text-decoration: line-through;
+}
+
+.task-item-controls {
+    display: flex;
+    align-items: center;
+}
+
+.task-deadline {
+    margin-right: 1rem;
+}
+
+/* Кнопка завершить / отменить */
+.toggle-button {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.toggle-button.complete {
+    background-color: #3b82f6; /* ~ bg-blue-500 */
+}
+
+.toggle-button.complete:hover {
+    background-color: #2563eb; /* ~ hover:bg-blue-600 */
+}
+
+.toggle-button.cancel {
+    background-color: #9ca3af; /* ~ bg-gray-300 */
+}
+
+/* Модальное окно */
+.modal-overlay {
+    position: fixed;
+    inset: 0; /* top, right, bottom, left = 0 */
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 28rem; /* ~ max-w-md */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.modal-title {
+    font-size: 1.5rem; /* ~ text-2xl */
+    font-weight: bold; /* ~ font-bold */
+    margin: 0;
+}
+
+.modal-icons {
+    display: flex;
+    align-items: center;
+}
+
+.icon-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease;
+}
+
+.icon-button:hover {
+    background-color: #e5e7eb; /* ~ hover:bg-gray-200 */
+}
+
+.modal-body {
+    margin-bottom: 1rem;
+}
+
+.modal-input,
+.modal-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.25rem;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.save-button {
+    background-color: #10b981; /* ~ bg-green-500 */
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #059669; /* ~ hover:bg-green-600 */
+}
+
+/* Дополнительные секции модалки */
+.modal-section {
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
