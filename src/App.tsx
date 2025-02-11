@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./component/Header";
 import TaskList from "./component/TaskList";
 import AddTaskButton from "./component/AddTaskButton";
@@ -8,22 +8,32 @@ import "./App.css";
 import {Task} from "./types/task.ts";
 
 const App: React.FC = () => {
-    const [tasks, setTasks] = useState<Task[]>([
-        {
-            id: 1,
-            title: "Завершить проект",
-            description: "Закончить разработку To-Do List",
-            deadline: "2025-06-30",
-            completed: false,
-        },
-        {
-            id: 2,
-            title: "Купить продукты",
-            description: "Молоко, хлеб, яйца",
-            deadline: "2025-06-25",
-            completed: false,
-        },
-    ]);
+    const [tasks, setTasks] = useState<Task[]>(() => {
+        const storedTasks = localStorage.getItem("tasks");
+        if (storedTasks) {
+            return JSON.parse(storedTasks);
+        }
+        return [
+            {
+                id: 1,
+                title: "Завершить проект",
+                description: "Закончить разработку To-Do List",
+                deadline: "2025-06-30",
+                completed: false,
+            },
+            {
+                id: 2,
+                title: "Купить продукты",
+                description: "Молоко, хлеб, яйца",
+                deadline: "2025-06-25",
+                completed: false,
+            },
+        ];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }, [tasks]);
 
     const addTask = (newTask: Omit<Task, "id" | "completed">) => {
         const task: Task = {

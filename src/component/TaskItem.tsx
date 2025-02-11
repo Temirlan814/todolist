@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { X, Edit } from "lucide-react";
 import "./TaskItem.css";
 import {Task} from "../types/task.ts";
@@ -20,6 +20,10 @@ const TaskItem: React.FC<TaskItemProps> = ({
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
     const [editedTask, setEditedTask] = useState<Task>({ ...task });
+
+    useEffect(() => {
+        setEditedTask({ ...task });
+    }, [task]);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => {
