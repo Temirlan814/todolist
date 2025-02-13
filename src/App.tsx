@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import Header from "./component/Header";
 import TaskList from "./component/TaskList";
 import AddTaskButton from "./component/AddTaskButton";
+import PomodoroTimer from "./component/Pomodoro.tsx";
+
 import "./App.css";
-import {Task} from "./types/task.ts";
+import { Task } from "./types/task.ts";
 
 const App: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([
@@ -52,6 +54,12 @@ const App: React.FC = () => {
         <div className="app-container">
             <Header />
             <AddTaskButton onAddTask={addTask} />
+
+            <PomodoroTimer
+                activeTaskId={tasks.find(task => !task.completed)?.id ?? null}
+                onTimerComplete={() => alert("Pomodoro session completed!")}
+            />
+
             <TaskList
                 tasks={tasks}
                 onToggleCompletion={toggleTaskCompletion}

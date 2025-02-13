@@ -10,3 +10,11 @@ export interface Task extends BaseTask {
     id: number;
     completed: boolean;
 }
+
+export interface Task {
+    id: number;
+    title: string;
+    description: string;
+    deadline: string;
+    completed: boolean;
+}
