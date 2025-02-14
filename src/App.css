@@ -1,14 +1,43 @@
 .appContainer {
-    padding: 2rem;
+    padding: 1rem;
+    margin: 0 auto;
     font-family: 'Arial', sans-serif;
     transition: background-color 0.3s ease, color 0.3s ease;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: column;  /* Можно оставить, если нужна вертикальная структура */
+    align-items: center;     /* Центрируем заголовок и т.п. */
     border-radius: 1rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+.twoColumns {
+    display: flex;
+    justify-content: center;  /* Центрирование колонок */
+    align-items: flex-start;  /* Выравнивание по верхнему краю */
+    gap: 30rem;               /* Отступ между колонками, увеличьте/уменьшите при необходимости */
+
+    max-width: calc(100% - 50px); /* Учитываем отступы по бокам */
+    margin: 0 auto;
+}
+
+.leftColumn {
+    flex: 0 0 400px;  /* Фиксированная ширина Pomodoro Timer */
+}
+
+.rightColumn {
+    flex: 0 0 400px;  /* Фиксированная ширина правой колонки (настраивайте под себя) */
+}
+
+
+html, body {
+    overflow-x: hidden;  /* Отключаем горизонтальную прокрутку */
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+
 
 .darkMode {
     background-color: #1e293b;

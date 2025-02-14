@@ -25,12 +25,8 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  flex-direction: column; /* Размещаем элементы вертикально */
-  justify-content: flex-start; /* Выравниваем элементы вверху */
-  align-items: center; /* Центрируем по горизонтали */
   min-height: 100vh;
-  padding-top: 50px; /* Добавляем отступ сверху */
+  padding-top: 10px;
 }
 
 

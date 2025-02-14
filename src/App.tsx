@@ -63,19 +63,28 @@ const App: React.FC = () => {
     return (
         <div className="app-container">
             <Header />
-            <AddTaskButton onAddTask={addTask} />
 
-            <PomodoroTimer
-                activeTaskId={tasks.find(task => !task.completed)?.id ?? null}
-                onTimerComplete={() => alert("Pomodoro session completed!")}
-            />
+            <div className="twoColumns">
+                {/* Левая колонка */}
+                <div className="leftColumn">
+                    <PomodoroTimer
+                        activeTaskId={tasks.find(task => !task.completed)?.id ?? null}
+                        onTimerComplete={() => alert("Pomodoro session completed!")}
+                    />
+                </div>
 
-            <TaskList
-                tasks={tasks}
-                onToggleCompletion={toggleTaskCompletion}
-                onUpdateTask={updateTask}
-            />
+                {/* Правая колонка */}
+                <div className="rightColumn">
+                    <AddTaskButton onAddTask={addTask} />
+                    <TaskList
+                        tasks={tasks}
+                        onToggleCompletion={toggleTaskCompletion}
+                        onUpdateTask={updateTask}
+                    />
+                </div>
+            </div>
         </div>
+
     );
 };
 
