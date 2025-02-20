@@ -111,12 +111,17 @@
 }
 
 .icon-button {
-    background: transparent;
+    background: white;
     border: none;
     cursor: pointer;
-    padding: 0.25rem;
+    padding: 0.5rem;
     border-radius: 0.25rem;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, opacity 0.3s ease-in-out;
+    display: flex; /* Обеспечиваем корректное отображение */
+    align-items: center;
+    justify-content: center;
+    color: #1f2937; /* Темный цвет иконки */
+    font-size: 1.2rem;
 }
 
 .icon-button:hover {

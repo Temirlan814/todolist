@@ -1,18 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Pomodoro.css";
 
 const WORK_TIME = 25 * 60;
 const LONG_BREAK = 15 * 60;
 const SHORT_BREAK = 5 * 60;
 
-interface PomodoroTimerProps {
-    activeTaskId?: number | null;
-    onTimerComplete: () => void;
-}
-
-interface PomodoroTimerState {
+interface PomodoroState {
     timeLeft: number;
     isActive: boolean;
     isWork: boolean;
@@ -20,111 +15,134 @@ interface PomodoroTimerState {
     completedSessions: number;
 }
 
-class PomodoroTimer extends React.Component<PomodoroTimerProps, PomodoroTimerState> {
-    interval: NodeJS.Timeout | null = null;
+const PomodoroTimer: React.FC = () => {
+    const loadState = (): PomodoroState => {
+        const savedState = localStorage.getItem("pomodoroState");
+        return savedState
+            ? JSON.parse(savedState)
+            : {
+                timeLeft: WORK_TIME,
+                isActive: false,
+                isWork: true,
+                selectedTime: WORK_TIME,
+                completedSessions: 0,
+            };
+    };
 
-    constructor(props: PomodoroTimerProps) {
-        super(props);
-        this.state = {
-            timeLeft: WORK_TIME,
-            isActive: false,
-            isWork: true,
-            selectedTime: WORK_TIME,
-            completedSessions: 0,
-        };
-    }
+    const [pomodoro, setPomodoro] = useState<PomodoroState>(loadState);
 
-    componentDidMount() {
-        // Автоматический запуск таймера при монтировании
-        this.toggleTimer();
-    }
+    useEffect(() => {
+        localStorage.setItem("pomodoroState", JSON.stringify(pomodoro));
+    }, [pomodoro]);
 
-    componentDidUpdate(_prevProps: PomodoroTimerProps, prevState: PomodoroTimerState) {
-        const { timeLeft, isActive, isWork, selectedTime } = this.state;
-        const { onTimerComplete } = this.props;
+    useEffect(() => {
+        let timer: NodeJS.Timeout | null = null;
 
-        if (isActive && timeLeft > 0 && !prevState.isActive) {
-            this.interval = setInterval(() => {
-                this.setState((prevState) => ({ timeLeft: prevState.timeLeft - 1 }));
+        if (pomodoro.isActive && pomodoro.timeLeft > 0) {
+            timer = setInterval(() => {
+                setPomodoro((prev) => ({
+                    ...prev,
+                    timeLeft: prev.timeLeft - 1,
+                }));
             }, 1000);
-        } else if (timeLeft === 0 && prevState.timeLeft !== 0) {
-            this.setState({ isWork: !isWork });
-            this.setState({ timeLeft: isWork ? LONG_BREAK : selectedTime });
-            if (isWork) {
-                this.setState((prevState) => ({ completedSessions: prevState.completedSessions + 1 }));
-            }
-            if (!isWork) onTimerComplete();
+        } else if (pomodoro.timeLeft === 0) {
+            setPomodoro((prev) => {
+                const newIsWork = !prev.isWork;
+                const newTime = newIsWork ? prev.selectedTime : prev.completedSessions % 4 === 0 ? LONG_BREAK : SHORT_BREAK;
+
+                return {
+                    ...prev,
+                    isWork: newIsWork,
+                    timeLeft: newTime,
+                    completedSessions: newIsWork ? prev.completedSessions + 1 : prev.completedSessions,
+                };
+            });
         }
 
-        if (!isActive && prevState.isActive && this.interval) {
-            clearInterval(this.interval);
-        }
-    }
+        return () => {
+            if (timer) clearInterval(timer);
+        };
+    }, [pomodoro.isActive, pomodoro.timeLeft]);
 
-    componentWillUnmount() {
-        if (this.interval) clearInterval(this.interval);
-    }
-
-    selectTime = (time: number) => {
-        this.setState({
-            selectedTime: time,
-            timeLeft: time,
-            isActive: false,
-            isWork: true,
+    const toggleTimer = () => {
+        setPomodoro((prev) => {
+            const newState = { ...prev, isActive: !prev.isActive };
+            localStorage.setItem("pomodoroState", JSON.stringify(newState));
+            return newState;
         });
     };
 
-    toggleTimer = () => {
-        this.setState((prevState) => ({ isActive: !prevState.isActive }));
+    const resetTimer = () => {
+        setPomodoro((prev) => {
+            const newState = {
+                ...prev,
+                timeLeft: prev.selectedTime,
+                isActive: false,
+                isWork: true,
+                completedSessions: 0,
+            };
+
+            localStorage.setItem("pomodoroState", JSON.stringify(newState)); // Сразу сохраняем
+            return newState;
+        });
     };
 
-    resetTimer = () => {
-        this.selectTime(this.state.selectedTime);
-        this.setState({ completedSessions: 0 });
-    };
 
-    formatTime = (seconds: number) => {
-        const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
-        const secs = (seconds % 60).toString().padStart(2, "0");
-        return `${mins}:${secs}`;
-    };
-
-    render() {
-        const { timeLeft, isActive, isWork, selectedTime, completedSessions } = this.state;
-        const { activeTaskId } = this.props;
-
-        return (
-            <div className="pomodoro-card">
-                <div className="pomodoro-title">Pomodoro Timer</div>
-                {/* Прогресс-бар */}
-                <div className="pomodoro-progress-bar">
-                    <div
-                        className="pomodoro-progress"
-                        style={{ width: `${((selectedTime - timeLeft) / selectedTime) * 100}%` }}
-                    ></div>
-                </div>
-                <div className="pomodoro-mode-buttons">
-                    <button onClick={() => this.selectTime(WORK_TIME)}>25 min</button>
-                    <button onClick={() => this.selectTime(LONG_BREAK)}>15 min</button>
-                    <button onClick={() => this.selectTime(SHORT_BREAK)}>5 min</button>
-                </div>
-                <div className="pomodoro-timer">{this.formatTime(timeLeft)}</div>
-                <div className="pomodoro-status">{isWork ? "Work Time" : "Break Time"}</div>
-                <div className="pomodoro-sessions">Completed Sessions: {completedSessions}</div>
-                <div className="pomodoro-buttons">
-                    <button className="start-button" onClick={this.toggleTimer}>
-                        {isActive ? "Pause" : "Start"}
-                    </button>
-                    <button className="reset-button" onClick={this.resetTimer}>
-                        Reset
-                    </button>
-                </div>
-                {activeTaskId !== null && (
-                    <div className="pomodoro-active-task">Active Task ID: {activeTaskId}</div>
-                )}
-            </div>
+    const selectTime = (time: number) => {
+        setPomodoro({
+            timeLeft: time,
+            isActive: false,
+            isWork: true,
+            selectedTime: time,
+            completedSessions: pomodoro.completedSessions,
+        });
+        localStorage.setItem(
+            "pomodoroState",
+            JSON.stringify({
+                timeLeft: time,
+                isActive: false,
+                isWork: true,
+                selectedTime: time,
+                completedSessions: pomodoro.completedSessions,
+            })
         );
-    }
-}
+    };
+
+    return (
+        <div className="pomodoro-card">
+            <div className="pomodoro-title">Pomodoro Timer</div>
+            <div className="pomodoro-progress-bar">
+                <div
+                    className="pomodoro-progress"
+                    style={{ width: `${(pomodoro.timeLeft / pomodoro.selectedTime) * 100}%` }}
+                ></div>
+            </div>
+            <div className="pomodoro-mode-buttons">
+                <button onClick={() => selectTime(WORK_TIME)} disabled={pomodoro.isActive}>
+                    25 min
+                </button>
+                <button onClick={() => selectTime(LONG_BREAK)} disabled={pomodoro.isActive}>
+                    15 min
+                </button>
+                <button onClick={() => selectTime(SHORT_BREAK)} disabled={pomodoro.isActive}>
+                    5 min
+                </button>
+            </div>
+            <div className="pomodoro-timer">{`${Math.floor(pomodoro.timeLeft / 60)
+                .toString()
+                .padStart(2, "0")}:${(pomodoro.timeLeft % 60).toString().padStart(2, "0")}`}</div>
+            <div className="pomodoro-status">{pomodoro.isWork ? "Work Time" : "Break Time"}</div>
+            <div className="pomodoro-sessions">Completed Sessions: {pomodoro.completedSessions}</div>
+            <div className="pomodoro-buttons">
+                <button className="start-button" onClick={toggleTimer}>
+                    {pomodoro.isActive ? "Pause" : "Start"}
+                </button>
+                <button className="reset-button" onClick={resetTimer}>
+                    Reset
+                </button>
+            </div>
+        </div>
+    );
+};
 
 export default PomodoroTimer;

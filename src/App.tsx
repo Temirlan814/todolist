@@ -65,15 +65,10 @@ const App: React.FC = () => {
             <Header />
 
             <div className="twoColumns">
-                {/* Левая колонка */}
                 <div className="leftColumn">
-                    <PomodoroTimer
-                        activeTaskId={tasks.find(task => !task.completed)?.id ?? null}
-                        onTimerComplete={() => alert("Pomodoro session completed!")}
-                    />
+                    <PomodoroTimer />
                 </div>
 
-                {/* Правая колонка */}
                 <div className="rightColumn">
                     <AddTaskButton onAddTask={addTask} />
                     <TaskList
