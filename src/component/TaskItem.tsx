@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from "react";
 import { X, Edit } from "lucide-react";
-import "./TaskItem.css";
+import "../Css-Modules/TaskItem.css";
 import {Task} from "../types/task.ts";
 
 

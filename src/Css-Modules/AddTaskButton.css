@@ -53,3 +53,14 @@
 .submit-button:hover {
     background-color: #059669; /* ~ hover:bg-green-600 */
 }
+.app-container .add-task-button,
+.app-container.dark-mode .add-task-button {
+    background: #a7c4bc;
+    color: #4a4a4a;
+    border: 1px solid #687f7b;
+}
+
+.app-container .add-task-button:hover,
+.app-container.dark-mode .add-task-button:hover {
+    background: #8fb3a9;
+}

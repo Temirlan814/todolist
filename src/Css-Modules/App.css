@@ -1,0 +1,204 @@
+/* Основные стили */
+.appContainer {
+    padding: 1rem;
+    font-family: 'Arial', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    gap: 10rem;
+    flex-direction: column;
+    align-items: center;
+}
+.header-container {
+    display: flex;
+    justify-content: space-between; /* Размещает элементы по бокам */
+    align-items: center; /* Выравнивание по вертикали */
+    width: 100%;
+}
+
+/* 🌞 Светлая тема */
+.app-container {
+    background: #F0E6E0;
+    color: #4A4A4A;
+}
+
+.app-container .task-card,
+.app-container button,
+.app-container .theme-toggle,
+.app-container .pomodoroProgressBar {
+    background: #A7C4BC;
+    color: #4A4A4A;
+    border: 2px solid white;
+}
+
+.app-container .task-card:hover,
+.app-container button:hover,
+.app-container .theme-toggle:hover {
+    background: #8FB3A9;
+}
+
+/* 🌙 Тёмная тема */
+.app-container.dark-mode {
+    background: #2C3E50;
+    color: #ECF0F1;
+}
+
+.app-container.dark-mode .task-card {
+    background: #34495E;
+    color: #ECF0F1;
+    border: 2px solid #7F8C8D;
+}
+
+.app-container.dark-mode .theme-toggle {
+    background: #2980B9;
+    color: #ECF0F1;
+}
+
+.app-container.dark-mode .theme-toggle:hover {
+    background: #3498DB;
+}
+
+/* Поля ввода */
+.app-container input {
+    background: #F5EBE0;
+    color: #4A4A4A;
+    border: 2px solid white;
+}
+
+.app-container.dark-mode input {
+    background: #34495E;
+    color: #ECF0F1;
+    border: 2px solid #7F8C8D;
+}
+
+/* Pomodoro Timer */
+.pomodoroTitle {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: inherit;
+    text-align: center;
+}
+
+.pomodoroProgressBar {
+    width: 100%;
+    height: 1rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    background-color: #D5E5E1;
+}
+
+.app-container.dark-mode .pomodoroProgressBar {
+    background-color: #2C3E50;
+}
+
+.pomodoroProgress {
+    height: 100%;
+    background-color: #27AE60;
+    transition: width 0.5s ease-in-out;
+}
+
+/* Список задач */
+.task-item {
+    width: 100%;
+    max-width: 600px;
+    padding: 1.5rem;
+    border: 2px solid #4B2138;
+    border-radius: 0.5rem;
+    background-color: #ffdecc;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.app-container.dark-mode .task-item {
+    background-color: #34495E;
+    border: 2px solid #7F8C8D;
+}
+
+.task-item-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.task-item:hover {
+    transform: scale(1.02);
+}
+
+.task-item.completed {
+    background-color: #8FB3A9;
+}
+
+.app-container.dark-mode .task-item.completed {
+    background-color: #2ECC71;
+}
+
+/* Модальное окно */
+.modal-content {
+    background: #F0E6E0;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 28rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.app-container.dark-mode .modal-content {
+    background: #34495E;
+}
+
+.save-button {
+    background-color: #27AE60;
+    color: #ECF0F1;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    border: none;
+    cursor: pointer;
+}
+
+.save-button:hover {
+    background-color: #2ECC71;
+}
+
+/* Контейнер для двух колонок */
+.twoColumns {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+/* Левая колонка (Pomodoro) */
+.leftColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Правая колонка (список задач) */
+.rightColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    align-items: stretch; /* Исправлено с flex-end */
+    width: 100%;
+}
+.app-container .task-card,
+.app-container button,
+.app-container .theme-toggle,
+.app-container .pomodoroProgressBar {
+    background: #a7c4bc;
+    color: #4a4a4a;
+    border: 1px solid #687f7b;
+}

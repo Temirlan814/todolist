@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import "./Pomodoro.css";
+import "../Css-Modules/Pomodoro.css";
 
 const WORK_TIME = 25 * 60;
 const LONG_BREAK = 15 * 60;

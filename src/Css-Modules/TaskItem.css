@@ -1,14 +1,24 @@
 /* Задача в списке */
 .task-item {
     width: 100%; /* Занимает всю доступную ширину */
-    max-width: 600px; /* Ограничиваем максимальную ширину */
+    max-width: 400px; /* Ограничиваем максимальную ширину */
     padding: 1.5rem; /* Увеличиваем отступы внутри */
-    border: 1px solid #e5e7eb; /* Серая рамка */
+    border: 1px solid #5C6680; /* Серо-синий оттенок */
     border-radius: 0.5rem; /* Скругляем углы */
-    background-color: white;
+    background-color: #5C6680; /* Светлая тема */
+    color: #4B2138;
+    margin: 0.5rem 0; /* Отступ сверху и снизу по 1rem */
     cursor: pointer;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out, background-color 0.3s, color 0.3s;
 }
+
+/* Темная тема для task-item */
+.app-container.dark-mode .task-item {
+    background-color: #151A28;
+    color: #E3D1CC;
+    border: 1px solid #293145;
+}
+
 .task-item-title {
     font-size: 1.5rem; /* Сделаем заголовок крупнее */
     font-weight: bold;
@@ -21,9 +31,13 @@
     transform: scale(1.02); /* Добавляем легкий эффект увеличения при наведении */
 }
 
-
 .task-item.completed {
     background-color: #d1fae5; /* ~ bg-green-100 */
+}
+
+/* Темная тема для завершенного таска */
+.app-container.dark-mode .task-item.completed {
+    background-color: #5C6680;
 }
 
 .task-item-header {
@@ -83,13 +97,19 @@
 }
 
 .modal-content {
-    background: #ffffff;
+    background: #E8D7D2;
     padding: 1.5rem;
     border-radius: 0.5rem;
     width: 100%;
     max-width: 28rem; /* ~ max-w-md */
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     position: relative;
+}
+
+/* Темная тема для модального окна */
+.app-container.dark-mode .modal-content {
+    background: #151A28;
+    color: #E3D1CC;
 }
 
 .modal-header {
@@ -137,7 +157,7 @@
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 0.5rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #5C6680;
     border-radius: 0.25rem;
 }
 

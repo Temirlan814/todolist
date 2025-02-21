@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import "./AddTaskButton.css";
+import "../Css-Modules/AddTaskButton.css";
 import {BaseTask} from "../types/task.ts";
 
 interface AddTaskButtonProps {
