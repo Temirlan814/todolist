@@ -1,21 +1,22 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
-import { X, Edit } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { X, Edit, Trash2 } from "lucide-react";
 import "../Css-Modules/TaskItem.css";
-import {Task} from "../types/task.ts";
-
+import { Task } from "../types/task.ts";
 
 interface TaskItemProps {
     task: Task;
     onToggleCompletion: (id: number) => void;
     onUpdateTask: (updatedTask: Task) => void;
+    onDeleteTask: (id: number) => void; // Добавляем обработчик удаления
 }
 
 const TaskItem: React.FC<TaskItemProps> = ({
                                                task,
                                                onToggleCompletion,
                                                onUpdateTask,
+                                               onDeleteTask,
                                            }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
@@ -62,6 +63,15 @@ const TaskItem: React.FC<TaskItemProps> = ({
                             className={`toggle-button ${task.completed ? "cancel" : "complete"}`}
                         >
                             {task.completed ? "Отменить" : "Завершить"}
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onDeleteTask(task.id);
+                            }}
+                            className="delete-button"
+                        >
+                            <Trash2 size={20} />
                         </button>
                     </div>
                 </div>
@@ -136,6 +146,15 @@ const TaskItem: React.FC<TaskItemProps> = ({
                                         {task.completed
                                             ? "Отменить выполнение"
                                             : "Отметить как выполненное"}
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            onDeleteTask(task.id);
+                                            closeModal();
+                                        }}
+                                        className="delete-button"
+                                    >
+                                        Удалить
                                     </button>
                                 </div>
                             </>

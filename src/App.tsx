@@ -19,6 +19,8 @@ const App: React.FC = () => {
         return localStorage.getItem("darkMode") === "true";
     });
 
+    const [searchQuery, setSearchQuery] = useState("");
+
     useEffect(() => {
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }, [tasks]);
@@ -50,6 +52,16 @@ const App: React.FC = () => {
         );
     };
 
+    const deleteTask = (id: number) => {
+        setTasks(tasks.filter((task) => task.id !== id));
+    };
+
+    // Фильтрация задач по поисковому запросу
+    const filteredTasks = tasks.filter((task) =>
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        task.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className={`app-container ${darkMode ? "dark-mode" : ""}`}>
             <div className="header-container">
@@ -59,17 +71,30 @@ const App: React.FC = () => {
                 </button>
             </div>
 
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="🔍 Поиск задач..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                />
+            </div>
+
             <div className="twoColumns">
                 <div className="leftColumn">
-                    <PomodoroTimer />
+                    <PomodoroTimer
+                        activeTaskId={tasks.find(task => !task.completed)?.id ?? null}
+                        onTimerComplete={() => alert("Pomodoro session completed!")}
+                    />
                 </div>
 
                 <div className="rightColumn">
                     <AddTaskButton onAddTask={addTask} />
                     <TaskList
-                        tasks={tasks}
+                        tasks={filteredTasks} // Передаем отфильтрованные задачи
                         onToggleCompletion={toggleTaskCompletion}
                         onUpdateTask={updateTask}
+                        onDeleteTask={deleteTask}
                     />
                 </div>
             </div>
